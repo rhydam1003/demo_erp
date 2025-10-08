@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id        String     @id @default(cuid())
+  name      String
+  email     String     @unique
+  password  String
+  rollNo    String     @unique
+  semester  Int
+  branch    String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  feedbacks Feedback[]
+}
+
+model Teacher {
+  id         String   @id @default(cuid())
+  name       String
+  department String
+  email      String   @unique
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  courses    Course[]
+}
+
+model Course {
+  id         String     @id @default(cuid())
+  code       String     @unique
+  name       String
+  semester   Int
+  teacherId  String
+  teacher    Teacher    @relation(fields: [teacherId], references: [id])
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  feedbacks  Feedback[]
+
+  @@index([semester])
+}
+
+model Feedback {
+  id              String   @id @default(cuid())
+  studentId       String
+  courseId        String
+  student         Student  @relation(fields: [studentId], references: [id])
+  course          Course   @relation(fields: [courseId], references: [id])
+  courseAnswers   Json     // Array of answers for course questions
+  teacherAnswers  Json     // Array of answers for teacher questions
+  submitted       Boolean  @default(false)
+  submittedAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([studentId, courseId])
+  @@index([studentId])
+  @@index([courseId])
+}
+
+model FeedbackSubmission {
+  id          String   @id @default(cuid())
+  studentId   String   @unique
+  semester    Int
+  finalSubmit Boolean  @default(false)
+  submittedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

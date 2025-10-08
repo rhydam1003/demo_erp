@@ -1,0 +1,15 @@
+{
+  "/login/page": "app/login/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/feedback/page": "app/feedback/page.js",
+  "/api/auth/me/route": "app/api/auth/me/route.js",
+  "/api/courses/route": "app/api/courses/route.js",
+  "/api/feedback/final-submit/route": "app/api/feedback/final-submit/route.js",
+  "/feedback/[courseId]/page": "app/feedback/[courseId]/page.js",
+  "/api/feedback/route": "app/api/feedback/route.js",
+  "/feedback/success/page": "app/feedback/success/page.js",
+  "/api/auth/logout/route": "app/api/auth/logout/route.js",
+  "/register/page": "app/register/page.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/auth/register/route": "app/api/auth/register/route.js"
+}
